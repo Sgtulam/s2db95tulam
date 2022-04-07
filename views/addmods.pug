@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  - let rows=Number(query.rows)
+  - let cols=Number(query.cols)
+  p The Number of Rows:#{rows} and The Number of columns:#{cols}
+  if(!(Number.isInteger(rows)))
+    h2 Please enetr integer value for rows
+  else if(!(Number.isInteger(cols)))
+     h2 Please enetr integer value for cols 
+  else if(rows>10 || rows<1)
+      h2 Please enetr  rows from 1 to 10
+  else if(cols>10 || cols<1)
+      h2 Please enetr  cols from 1 to 10 
+  else 
+    table.table-bordered.table-striped#outer
+      - for(let i=0; i<rows; i++) {
+          tr#middle
+            - for(let j=0; j<cols; j++) {
+                td= i+(j*j)
+            - }       
+      -}
+
+  
+      
+
+
+
+  
+     
+  
