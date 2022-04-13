@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const elements_controller = require('../controllers/element')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('element', { title: 'Search Results' });
-});
+router.get('/', elements_controller.costume_view_all_Page);
 
 module.exports = router;
