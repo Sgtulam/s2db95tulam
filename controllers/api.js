@@ -1,3 +1,5 @@
+const element = require("../models/element");
+
 // API for our resources
 exports.api = function(req, res) {
     res.write('[');
@@ -7,3 +9,4 @@ exports.api = function(req, res) {
     res.write(']')
     res.send();
     };
+

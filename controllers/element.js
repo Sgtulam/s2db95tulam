@@ -1,8 +1,15 @@
 var element = require('../models/element');
 // List of all elements
-exports.element_list = function(req, res) {
-res.send('NOT IMPLEMENTED: element list');
-};
+exports.element_list = async function(req, res) {
+    try{
+    theCostumes = await element.find();
+    res.send(theCostumes);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
 // for a specific element.
 exports.element_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: element detail: ' + req.params.id);
