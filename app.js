@@ -3,14 +3,32 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var Element = require("./models/element");
+
+
+
+const connectionString =process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,useUnifiedTopology: true});
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var elementRouter = require('./routes/element');
 var addModsRouter = require('./routes/addmods');
 var selectorRouter = require('./routes/selector');
+var resourceRouter = require('./routes/resource');
 
 var app = express();
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +44,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/element', elementRouter);
 app.use('/addmods', addModsRouter);
-app.use('/selector', selectorRouter)
+app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
 
 
 // catch 404 and forward to error handler
@@ -44,5 +63,32 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// We can seed the collection if needed on
+
+async function recreateDB(){
+// Delete everything
+await Element.deleteMany();
+let instance1 = new
+Element({element_name:"HYDROGEN", symbol:'H',number:1});
+let instance2 = new Element({element_name:"MAGNESIUM", symbol:'MG',number:12});
+let instance3 = new Element({element_name:"OXYGEN", symbol:'O',number:8});
+instance1.save( function(err,doc) {
+if(err) return console.error(err);
+console.log("First object saved")
+});
+instance2.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("second object saved")
+  });
+  instance3.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("third object saved")
+    });
+}
+let reseed = true;
+//if (reseed) { recreateDB();}
+
+
 
 module.exports = app;
