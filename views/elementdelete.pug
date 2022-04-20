@@ -5,8 +5,8 @@ block content
   - let element_name = toShow.element_name
   - let symbol = toShow.symbol
   - let number = toShow.number
-  div.row(class='mb-2')
-    div.mr-1 ID is
+  div
+    div ID is
     div #{elementid}
   - let actionid = "/resource/elements/" + elementid
   form(id='elementForm', action= actionid, method="DELETE")
