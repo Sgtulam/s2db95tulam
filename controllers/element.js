@@ -10,18 +10,7 @@ exports.element_list = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
-// for a specific element.
-// exports.element_detail = function(req, res) {
-// res.send('NOT IMPLEMENTED: element detail: ' + req.params.id);
-// };
-// Handle element create on POST.
-// exports.element_create_post = function(req, res) {
-// res.send('NOT IMPLEMENTED: element create POST');
-// };
-// Handle element delete form on DELETE.
-exports.element_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: element delete DELETE ' + req.params.id);
-};
+
 // Handle element update form on PUT.
 exports.element_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: element update PUT' + req.params.id);
@@ -91,4 +80,31 @@ res.status(500)
 res.send(`{"error": ${err}: Update for id ${req.params.id}failed`);
 }
 };
+
+// Handle element delete on DELETE.
+exports.element_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await element.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+
+    // Handle a show one view with id specified by query
+exports.element_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await element.findById( req.query.id)
+    res.render('elementdetail',
+    { title: 'element Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
         

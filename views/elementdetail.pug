@@ -1,0 +1,20 @@
+extends layout
+block content
+  h1= title
+  - let elementid = toShow._id
+  - let element_name = toShow.element_name
+  - let elementnumber = toShow.number
+  - let elementsymbol = toShow.symbol
+  div
+    div.row
+      div(class='elementAttr mr-3') element ID is:
+      div #{elementid}
+    div.row
+      div(class='elementAttr mr-3') element name is:
+      div #{element_name}
+    div.row
+      div(class='elementAttr mr-3') element number is:
+      div #{elementnumber}
+    div.row
+      div(class='elementAttr mr-3') element symbol is:
+      div #{elementsymbol}   
