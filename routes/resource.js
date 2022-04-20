@@ -19,4 +19,7 @@ router.get('/elements/:id', element_controller.element_detail);
 router.get('/elements', element_controller.element_list);
 /* GET detail element page */
 router.get('/detail', element_controller.element_view_one_Page);
+
+/* GET create element page */
+router.get('/create', element_controller.element_create_Page);
 module.exports = router;
