@@ -121,4 +121,34 @@ exports.element_create_Page =async function(req, res) {
     res.send(`{'error': '${err}'}`);
     }
     };
+
+    // Handle building the view for updating a element.
+// query provides the id
+exports.element_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await element.findById(req.query.id)
+    console.log(result)
+    res.render('elementupdate', { title: 'element Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+
+    // Handle a delete one view with id from query
+exports.element_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await element.findById(req.query.id)
+    res.render('elementdelete', { title: 'element Delete', toShow:
+    result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
         

@@ -1,0 +1,39 @@
+extends layout
+block content
+  h1= title
+  - let elementid = toShow._id
+  - let element_name = toShow.element_name
+  - let symbol = toShow.symbol
+  - let number = toShow.number
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{elementid}
+  - let actionid = "/resource/elements/" + elementid
+  form(id='elementForm', action= actionid, method="DELETE")
+    div.form-group
+      label.elementAttr(for='element name') element name
+      input#element_name(type='text', name='element name', value= element_name )
+    div.form-group
+      label.elementAttr(for='symbol') element symbol
+      input#symbol(type='text', name='symbol', value= symbol )
+    div.form-group
+      label.elementAttr(for='number') element number
+      input#number(type='number', name='number', value= number )
+    input(type="submit")
+  script.
+    document.forms['elementForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    // TODO do something here to show user that form is being submitted
+    fetch(event.target.action, {
+    method: 'DELETE',
+    body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+    }).then((resp) => {
+    return resp.json(); // or resp.text() or whatever the server sends
+    }).then((body) => {
+    alert("delete succeded")
+    // TODO handle body
+    }).catch((error) => {
+    // TODO handle error
+    alert("Update failed " + error )
+    });
+    });

@@ -22,4 +22,10 @@ router.get('/detail', element_controller.element_view_one_Page);
 
 /* GET create element page */
 router.get('/create', element_controller.element_create_Page);
+
+/* GET create update page */
+router.get('/update', element_controller.element_update_Page);
+
+/* GET delete costume page */
+router.get('/delete', element_controller.element_delete_Page);
 module.exports = router;
