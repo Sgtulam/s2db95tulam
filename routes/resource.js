@@ -23,7 +23,15 @@ router.get('/detail', element_controller.element_view_one_Page);
 /* GET create element page */
 router.get('/create', element_controller.element_create_Page);
 
+<<<<<<< HEAD
 
 /* GET create update page */
 router.get('/update', element_controller.element_update_Page);
+=======
+/* GET create update page */
+router.get('/update', element_controller.element_update_Page);
+
+/* GET delete costume page */
+router.get('/delete', element_controller.element_delete_Page);
+>>>>>>> ff4f801a1e8bee312f6d6ed06d67172c70b6f076
 module.exports = router;
