@@ -72,7 +72,7 @@ if(req.body.element_name)toUpdate.element_name = req.body.element_name;
 if(req.body.number) toUpdate.number = req.body.number;
 if(req.body.symbol) toUpdate.symbol = req.body.symbol;
 let result = await toUpdate.save();
-console.log("Sucess " + result)
+console.log("Success " + result)
 res.send(result)
 }
  catch (err) {
@@ -121,4 +121,18 @@ exports.element_create_Page =async function(req, res) {
     res.send(`{'error': '${err}'}`);
     }
     };
+
+    // Handle building the view for updating a element.
+// query provides the id
+// exports.element_update_Page = async function(req, res) {
+//     console.log("update view for item "+req.query.id)
+//     try{
+//     let result = await element.findById(req.query.id)
+//     res.render('elementupdate', { title: 'element Update', toShow: result });
+//     }
+//     catch(err){
+//     res.status(500)
+//     res.send(`{'error': '${err}'}`);
+//     }
+//     };
         
