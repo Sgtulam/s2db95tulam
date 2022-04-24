@@ -4,14 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Element = require("./models/element");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var app = express();
 
-
-
-const connectionString =process.env.MONGO_CON
-mongoose = require('mongoose');
-mongoose.connect(connectionString,{useNewUrlParser: true,useUnifiedTopology: true});
-
-
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+  Account.findOne({ username: username }, function (err, user) {
+  if (err) { return done(err); }
+  if (!user) {
+  return done(null, false, { message: 'Incorrect username.' });
+  }
+  if (!user.validPassword(password)) {
+  return done(null, false, { message: 'Incorrect password.' });
+  }
+  return done(null, user);
+  });
+  }))
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,7 +29,15 @@ var addModsRouter = require('./routes/addmods');
 var selectorRouter = require('./routes/selector');
 var resourceRouter = require('./routes/resource');
 
-var app = express();
+
+const connectionString =process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,{useNewUrlParser: true,useUnifiedTopology: true});
+
+
+
+
+
 
 //Get the default connection
 var db = mongoose.connection;
@@ -37,6 +54,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -46,6 +70,14 @@ app.use('/addmods', addModsRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
 
+
+// passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -69,9 +101,9 @@ async function recreateDB(){
 // Delete everything
 await Element.deleteMany();
 let instance1 = new
-Element({element_name:"HYDROGEN", symbol:'H',number:1});
-let instance2 = new Element({element_name:"MAGNESIUM", symbol:'MG',number:12});
-let instance3 = new Element({element_name:"OXYGEN", symbol:'O',number:8});
+Element({element_name:"Calcium", symbol:'cl',number:17});
+let instance2 = new Element({element_name:"copper", symbol:'cp',number:22});
+//let instance3 = new Element({element_name:"OXYGEN", symbol:'O',number:8});
 instance1.save( function(err,doc) {
 if(err) return console.error(err);
 console.log("First object saved")
@@ -80,13 +112,15 @@ instance2.save( function(err,doc) {
   if(err) return console.error(err);
   console.log("second object saved")
   });
-  instance3.save( function(err,doc) {
-    if(err) return console.error(err);
-    console.log("third object saved")
-    });
+  // instance3.save( function(err,doc) {
+  //   if(err) return console.error(err);
+  //   console.log("third object saved")
+  //   });
 }
 let reseed = true;
 //if (reseed) { recreateDB();}
+
+
 
 
 

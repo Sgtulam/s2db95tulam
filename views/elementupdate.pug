@@ -3,28 +3,6 @@ block content
   h1= title
   - let elementid = toShow._id
   - let element_name = toShow.element_name
-<<<<<<< HEAD
-  - let elementnumber = toShow.number
-  - let elementsymbol = toShow.symbol
-  div.row(class='mb-2')
-  div.mr-1 ID is
-  div #{elementid}
-  - let actionid = "/resource/elements/" + elementid
-  form(id='elementForm', action= actionid, method="PUT")
-  div.form-group
-    label.elementAttr(for='element_name') element type
-    input#element_name(type='text', name='element_name', value= element_name )
-  div.form-group
-    label.elementAttr(for='size') element size
-    input#size(type='number', name='number', value= elementnumber )
-  div.form-group
-    label.elementAttr(for='cost') element cost
-    input#cost(type='text', name='symbol', value= elementsymbol )
-  input(type="submit")
-  script.
-    document.forms['elementForm'].addEventListener('submit', (event) => {
-    
-=======
   - let symbol = toShow.symbol
   - let number = toShow.number
   div.row(class='mb-2')
@@ -44,7 +22,6 @@ block content
     input(type="submit")
   script.
     document.forms['elementForm'].addEventListener('submit', (event) => {
->>>>>>> ff4f801a1e8bee312f6d6ed06d67172c70b6f076
     event.preventDefault();
     // TODO do something here to show user that form is being submitted
     fetch(event.target.action, {

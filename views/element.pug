@@ -3,17 +3,16 @@ extends layout
 block content
   h1= title
   - results=results
-  .container-fluid
-    .row
+  div.container-fluid
+    div(class="row m-1")
       each value,index in results
-       .col-sm-2(style="background-color: coral" onclick=`buy(${index+1})`) elementName:#{value.element_name}<br> atominNumber:#{value.number}<br> symbol:#{value.symbol} 
+        - let destination = `dispatch(\"/resource/update?id=${value._id}\")`
+        div(class="row-sm-2", class="m-1") elementName:#{value.element_name}<br> atominNumber:#{value.number}<br> symbol:#{value.symbol} 
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
   script.
     function buy(x)   {
       alert(`You Purchased item : ${x}`)
-    }                      
-   
-   
- 
-
-         
-            
+    } 
+    function dispatch(path){
+    window.location.href=path
+    }                     
