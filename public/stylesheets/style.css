@@ -51,3 +51,8 @@ a {
     width: 500px;
     padding: 2px;
   }
+  button{
+    display: flex;
+    justify-content: space-between; 
+
+  }

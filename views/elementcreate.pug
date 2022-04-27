@@ -1,17 +1,19 @@
 extends layout
 block content
+  - let destination_create = `dispatch(\"/element\")`
+  button.btn( class="btn-primary ml-1", onclick= destination_create) Home 
   h1= title
   form(id='elementForm', action="/resource/elements", method="POST")
-  div.form-group
-    label.elementAttr(for='element_name') element name
-    input#element_type(type='text', name='element_name')
-  div.form-group
-    label.elementAttr(for='number') element number
-    input#size(type='number', name='number')
-  div.form-group
-    label.elementAttr(for='symbol') element symbol
-    input#cost(type='text', name='symbol')
-  input(type="submit")
+    div.form-group
+      label.elementAttr(for='element_name') element name
+      input#element_type(type='text', name='element_name')
+    div.form-group
+      label.elementAttr(for='number') element number 
+      input#size(type='number', name='number')
+    div.form-group
+      label.elementAttr(for='symbol') element symbol
+      input#cost(type='text', name='symbol')
+    button(class='btn-success ml-1 btn-lg"' onclick='submit') Create
   script.
     document.forms['elementForm'].addEventListener('submit', (event) => {
     event.preventDefault();
@@ -28,4 +30,7 @@ block content
     // TODO handle error
     alert("Save failed " + error )
     });
-    });
+    }); 
+    function dispatch(path){
+    window.location.href=path
+    }

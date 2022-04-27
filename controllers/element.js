@@ -114,7 +114,7 @@ exports.element_view_one_Page = async function(req, res) {
 exports.element_create_Page =async function(req, res) {
     console.log("create view")
     try{
-    res.render('elementcreate', { title: 'element Create'});
+    res.render('elementcreate', { title: 'Element Create'});
     }
     catch(err){
     res.status(500)
@@ -129,7 +129,7 @@ exports.element_update_Page = async function(req, res) {
     try{
     let result = await element.findById(req.query.id)
     console.log(result)
-    res.render('elementupdate', { title: 'element Update', toShow: result });
+    res.render('elementupdate', { title: 'Element Update', toShow: result });
     }
     catch(err){
     res.status(500)
@@ -143,7 +143,7 @@ exports.element_delete_Page = async function(req, res) {
     console.log("Delete view for id " + req.query.id)
     try{
     result = await element.findById(req.query.id)
-    res.render('elementdelete', { title: 'element Delete', toShow:
+    res.render('elementdelete', { title: 'Element Delete', toShow:
     result });
     }
     catch(err){

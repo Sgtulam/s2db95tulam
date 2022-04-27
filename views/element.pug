@@ -1,14 +1,27 @@
 extends layout
 
 block content
+  - let destination_create = `dispatch(\"/resource/create\")`
+  button.btn( class="btn-primary ml-1", onclick= destination_create) Create Element
+  - let destination_logout = `dispatch(\"/logout\")`
+  <br>
+  button.btn( class="btn-primary ml-1", onclick= destination_logout) Logout
   h1= title
   - results=results
   div.container-fluid
     div(class="row m-1")
       each value,index in results
         - let destination = `dispatch(\"/resource/update?id=${value._id}\")`
-        div(class="row-sm-2", class="m-1") elementName:#{value.element_name}<br> atominNumber:#{value.number}<br> symbol:#{value.symbol} 
-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+        - let destination_detail = `dispatch(\"/resource/detail?id=${value._id}\")`
+        - let destination_delete = `dispatch(\"/resource/delete?id=${value._id}\")`
+        
+        div(class="row-sm-2 .text-muted", class="m-1") Element Name       :<b>#{value.element_name}</b><br> Atomic Number      :<b>#{value.number}</b><br> Element Symbol     :<b>#{value.symbol}</b> 
+        button.btn( class="btn btn-primary ml-1", onclick= destination) Update
+        button.btn( class="btn btn-success ml-1", onclick= destination_detail) Detail
+        button.btn( class="btn btn-danger ml-1", onclick= destination_delete) Delete
+        <br><br>
+
+
   script.
     function buy(x)   {
       alert(`You Purchased item : ${x}`)

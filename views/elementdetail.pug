@@ -1,5 +1,7 @@
 extends layout
 block content
+  - let destination_create = `dispatch(\"/element\")`
+  button.btn( class="btn-primary ml-1", onclick= destination_create) Home
   h1= title
   - let elementid = toShow._id
   - let element_name = toShow.element_name
@@ -7,14 +9,18 @@ block content
   - let elementsymbol = toShow.symbol
   div
     div.row
-      div(class='elementAttr mr-3') element ID is:
-      div #{elementid}
+      div(class='elementAttr mr-3') Element ID is:
+      div <b>#{elementid}</b>
     div.row
-      div(class='elementAttr mr-3') element name is:
+      div(class='elementAttr mr-3') Element name is:
       div #{element_name}
     div.row
-      div(class='elementAttr mr-3') element number is:
+      div(class='elementAttr mr-3') Element number is:
       div #{elementnumber}
     div.row
-      div(class='elementAttr mr-3') element symbol is:
+      div(class='elementAttr mr-3') Element symbol is:
       div #{elementsymbol}   
+  script.
+    function dispatch(path){
+      window.location.href=path
+      }

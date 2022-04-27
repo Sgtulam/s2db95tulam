@@ -5,9 +5,11 @@ var Account = require('../models/account');
 router.get('/', function (req, res) {
 res.render('index', { title: 'element App', user : req.user });
 });
+
 router.get('/register', function(req, res) {
 res.render('register', { title: 'element App Registration'});
 });
+
 router.post('/register', function(req, res) {
 Account.findOne({ username : req.body.username },
 function(err, user) {
@@ -15,16 +17,19 @@ if(err) {
 return res.render('register', { title: 'Registration',
 message: 'Registration error', account : req.body.username })
 }
+
 if(user == {} ){
 return res.render('register', { title: 'Registration',
 message: 'Existing User', account : req.body.username })
 }
+
 let newAccount = new Account({ username : req.body.username });
 Account.register(newAccount, req.body.password, function(err, user){
 if (err) {
 return res.render('register', { title: 'Registration',
 message: 'access error', account : req.body.username })
 }
+
 if(!user){
 return res.render('register',{ title: 'Registration',
 message: 'access error', account : req.body.username })
@@ -35,9 +40,12 @@ res.redirect('/');
 })
 })
 router.get('/login', function(req, res) {
-res.render('login', { title: 'element App Login', user : req.user });
+res.render('login', { title: 'Element App Login', user : req.user });
 });
 router.post('/login', passport.authenticate('local'), function(req, res) {
+    console.log("Enter credentials to update")
+    if(req.session.returnTo)
+res.redirect(req.session.returnTo);
 res.redirect('/');
 });
 router.get('/logout', function(req, res) {

@@ -1,9 +1,13 @@
 extends layout
 block content
+  h1 Welcome!
   if (!user)
-    a(href="/login") Login
+    a(href="/login") 
+      button Login
     br
-    a(href="/register") Register
+    br
+    a(href="/register") 
+      button Register
   if (user)
     p You are currently logged in as #{user.username}
     a(href="/element") Take me to Elements

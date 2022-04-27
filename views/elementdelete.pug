@@ -1,5 +1,7 @@
 extends layout
 block content
+  - let destination_create = `dispatch(\"/element\")`
+  button.btn( class="btn-primary ml-1", onclick= destination_create) Home
   h1= title
   - let elementid = toShow._id
   - let element_name = toShow.element_name
@@ -11,15 +13,15 @@ block content
   - let actionid = "/resource/elements/" + elementid
   form(id='elementForm', action= actionid, method="DELETE")
     div.form-group
-      label.elementAttr(for='element name') element name
+      label.elementAttr(for='element name') Element name
       input#element_name(type='text', name='element name', value= element_name )
     div.form-group
-      label.elementAttr(for='symbol') element symbol
+      label.elementAttr(for='symbol') Element symbol
       input#symbol(type='text', name='symbol', value= symbol )
     div.form-group
-      label.elementAttr(for='number') element number
+      label.elementAttr(for='number') Element number
       input#number(type='number', name='number', value= number )
-    input(type="submit")
+    button(type='submit' class="btn-lg btn-danger") Delete 
   script.
     document.forms['elementForm'].addEventListener('submit', (event) => {
     event.preventDefault();
@@ -31,9 +33,14 @@ block content
     return resp.json(); // or resp.text() or whatever the server sends
     }).then((body) => {
     alert("delete succeded")
+    window.location.href='/element/'
+    
     // TODO handle body
     }).catch((error) => {
     // TODO handle error
     alert("Update failed " + error )
     });
     });
+    function dispatch(path){
+    window.location.href=path
+    }
